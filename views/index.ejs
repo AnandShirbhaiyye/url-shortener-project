@@ -24,7 +24,7 @@
           id="fullUrl"
           class="form-control mr-2"
         />
-        <div class="text-center mt-3">
+        <div class="d-grid gap-2 col-6 mx-auto text-center mt-3">
           <button class="btn btn-success" type="submit">Shrink</button>
         </div>
       </form>
@@ -38,15 +38,15 @@
           </tr>
         </thead>
         <tbody>
+          <% shortUrls.forEach(shortUrl => { %>
           <tr>
             <td>
-              <a href="https://www.roadtocode.org"
-                >https://www.roadtocode.org</a
-              >
+              <a href="<%= shortUrl.full %>"> <%= shortUrl.full %> </a>
             </td>
-            <td><a href="/123456">123456</a></td>
-            <td>10</td>
+            <td><a href="<%= shortUrl.short %>"><%= shortUrl.short %> </a></td>
+            <td><%= shortUrl.clicks %></td>
           </tr>
+          <% }) %>
         </tbody>
       </table>
     </div>
