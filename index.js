@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-import shortUrl from './models/shortUrl'
+import ShortUrl from './models/ShortUrl';
 
 const app = express();
 app.use(express.json());
@@ -26,7 +26,7 @@ app.get('/', async(req, res)=>{
 })
 
 app.post('/shortUrls',async (req,res)=>{
-  await shortUrl.create({full: req.body.fullUrl})
+  await ShortUrl.create({full: req.body.fullUrl})
   res.redirect('/')
 })
 
