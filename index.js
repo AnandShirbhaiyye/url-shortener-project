@@ -2,9 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+import shortUrl from './models/shortUrl'
+
 const app = express();
 app.use(express.json());
-
 
 dotenv.config();
 
@@ -17,13 +18,16 @@ async function connectMongoDB() {
 connectMongoDB();
 
 app.set('view engine', 'ejs')
+app.use(express.urlencoded({extended: false}))
 
-app.get('/', (req, res)=>{
-  res.render('index')
+app.get('/', async(req, res)=>{
+  const shortUrls = await shortUrl.find()
+  res.render('index', {shortUrls: shortUrls})
 })
 
-app.post('/shortUrls',(req,res)=>{
-
+app.post('/shortUrls',async (req,res)=>{
+  await shortUrl.create({full: req.body.fullUrl})
+  res.redirect('/')
 })
 
 const PORT = process.env.PORT || 5000;
