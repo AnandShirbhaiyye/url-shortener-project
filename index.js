@@ -30,7 +30,15 @@ app.post('/shortUrls',async (req,res)=>{
   res.redirect('/')
 })
 
+app.get('/:shortUrl', async (req,res)=>{
+  const shortUrl = await UrlShorts.findOne({short: req.params.shortUrl})
+  if(shortUrl == null) return res.sendStatus(404)
 
+  shortUrl.clicks++
+  shortUrl.save()
+
+  res.redirect(shortUrl.full)
+})
 
 const PORT = process.env.PORT || 5000;
 
