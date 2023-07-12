@@ -25,7 +25,7 @@
           class="form-control mr-2"
         />
         <div class="d-grid gap-2 col-6 mx-auto text-center mt-3">
-          <button class="btn btn-success" type="submit">Shrink</button>
+          <button class="btn btn-warning" type="submit">Shrink</button>
         </div>
       </form>
 
@@ -34,6 +34,7 @@
           <tr>
             <th>Full URL</th>
             <th>Short URL</th>
+            <th>Edit URL</th>
             <th>Clicks</th>
           </tr>
         </thead>
@@ -44,6 +45,7 @@
               <a href="<%= shortUrl.full %>"> <%= shortUrl.full %> </a>
             </td>
             <td><a href="<%= shortUrl.short %>"><%= shortUrl.short %> </a></td>
+            <td> <button class="btn btn-success" type="submit">Update URL</button></td>
             <td><%= shortUrl.clicks %></td>
           </tr>
           <% }) %>

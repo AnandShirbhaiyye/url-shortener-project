@@ -17,28 +17,45 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
-app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended: false}))
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/', async(req, res)=>{
-  const shortUrls = await UrlShorts.find()
-  res.render('index', {shortUrls: shortUrls})
-})
+app.get("/", async (req, res) => {
+  const shortUrls = await UrlShorts.find();
+  res.render("index", { shortUrls: shortUrls });
+});
 
-app.post('/shortUrls',async (req,res)=>{
-  await UrlShorts.create({full: req.body.fullUrl})
-  res.redirect('/')
-})
+app.post("/shortUrls", async (req, res) => {
+  await UrlShorts.create({ full: req.body.fullUrl });
+  res.redirect("/");
+});
 
-app.get('/:shortUrl', async (req,res)=>{
-  const shortUrl = await UrlShorts.findOne({short: req.params.shortUrl})
-  if(shortUrl == null) return res.sendStatus(404)
+app.get("/:shortUrl", async (req, res) => {
+  const shortUrl = await UrlShorts.findOne({ short: req.params.shortUrl });
+  if (shortUrl == null) return res.sendStatus(404);
 
-  shortUrl.clicks++
-  shortUrl.save()
+  shortUrl.clicks++;
+  shortUrl.save();
 
-  res.redirect(shortUrl.full)
-})
+  res.redirect(shortUrl.full);
+});
+
+app.put("/updateurl", async (req, res) => {
+  await UrlShorts.updateOne(
+      { _id: req.body.id },
+  
+      {
+        $set: req.body,
+      }
+    );
+  
+    res.json({
+      success: true,
+      message: "ShortUrl successfully updated...",
+    });
+  });
+
+
 
 const PORT = process.env.PORT || 5000;
 
